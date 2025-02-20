@@ -4,12 +4,12 @@ const crypto = require('crypto-js');
 const https = require('https');
 const fs = require('fs');
 
-// Broker and password configuration
+
 const broker = 'wss://test.mosquitto.org:8081';
 const topic = 'chat/room';
 const correctPassword = 'abc';
 
-// Function to download the code from GitHub
+
 function downloadJSFile(url, destination) {
   https.get(url, (res) => {
     const fileStream = fs.createWriteStream(destination);
@@ -21,7 +21,7 @@ function downloadJSFile(url, destination) {
   });
 }
 
-// Authentication function
+
 function authenticate() {
   const rl = readline.createInterface({
     input: process.stdin,
@@ -39,7 +39,7 @@ function authenticate() {
   });
 }
 
-// Function to connect to the MQTT broker
+
 function connectToMQTT() {
   const client = mqtt.connect(broker);
 
@@ -58,7 +58,7 @@ function connectToMQTT() {
     console.log(`Received: ${decryptedMessage}`);
   });
 
-  // Listening to messages from the console
+
   readline.createInterface({
     input: process.stdin,
     output: process.stdout
@@ -69,18 +69,18 @@ function connectToMQTT() {
   });
 }
 
-// Message encryption function
+
 function encryptMessage(message) {
   return crypto.AES.encrypt(message, 'secret_key').toString();
 }
 
-// Message decryption function
+
 function decryptMessage(encryptedMessage) {
   const bytes = crypto.AES.decrypt(encryptedMessage, 'secret_key');
   return bytes.toString(crypto.enc.Utf8);
 }
 
-// Function to run the chat app
+
 function runChatApp() {
   authenticate();
 }
